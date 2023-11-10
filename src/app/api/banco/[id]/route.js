@@ -1,21 +1,21 @@
 import { NextResponse } from "next/server";
 import {connectDB} from '@/libs/mongoose';
-import Materias from '@/models/materia';
+import BancoPreguntas from '@/models/bancopregunta';
 
 export async function GET(request,{params}){
     try {
         await connectDB();
         const id = params.id;
-        const materias= await Materias.findById(id);
+        const bancopreguntas= await BancoPreguntas.findById(id);
 
-        if(!materias){
+        if(!bancopreguntas){
             return NextResponse({
-                mensaje:"Materia no encontrada"
+                mensaje:"banco de preguntas no encontrado"
             },{status:400})
         }
 
         return NextResponse.json({
-        materias
+            bancopreguntas
         })
     } catch (error) {
         console.log(error)
@@ -29,16 +29,16 @@ export async function DELETE(request,{params}){
         await connectDB();
         const id = params.id;
         console.log(id);
-        const materias= await Materias.deleteOne({'_id':id});
+        const bancopreguntas= await BancoPreguntas.deleteOne({'_id':id});
         
-        if(!materias){
+        if(!bancopreguntas){
             return NextResponse({
-                mensaje:"Materia no encontrada"
+                mensaje:"banco depreguntas no encontrada"
             },{status:400})
         }
 
         return NextResponse.json({
-        materias
+            bancopreguntas
         })
     } catch (error) {
         console.log(error)
@@ -53,17 +53,17 @@ export async function PUT(request,{params}){
         await connectDB();
         const data = await request.json();
         const id = params.id; 
-        const materiaUpdated=await Materias.findByIdAndUpdate(id,data,{new:true});
+        const bancoUpdated=await BancoPreguntas.findByIdAndUpdate(id,data,{new:true});
         
-        if(!materiaUpdated){
+        if(!bancoUpdated){
             return NextResponse({
 
-                mensaje:"Materia no encontrada"
+                mensaje:"banco de preguntas no encontrada"
             },{status:400})
         }
 
         return NextResponse.json({
-            materiaUpdated 
+            bancoUpdated 
         })
     } catch (error) {
         console.log(error)
