@@ -1,3 +1,4 @@
+import MateriaCard from "@/componets/MateriaCard";
 import Link from "next/link";
 
 export const feachMaterias=()=>{
@@ -12,14 +13,15 @@ export default async function Materias(){
     return(
         <div>
             <h1>Materias</h1>
-            <Link href="/">Inicio</Link>
-            {
-                materias.map(materia=>(
-                    <div  className="bg-gray-700 p-10 mt-5 text-white" key={materia._id}>
-                        <h1>{materia.titulo}</h1>
-                    </div>
-                ))
-            }
+            <Link href='/materia/new'>Nueva Materia</Link>
+            <div className="grid grid-cols-3 gap-2">
+                {
+                    materias.map(materia=>(
+                        <MateriaCard key={materia._id} materia={materia} />
+                    ))
+                }
+            </div>
+            
         </div>
     )
 
