@@ -2,7 +2,7 @@ import MateriaCard from "@/componets/MateriaCard";
 import Link from "next/link";
 
 export const feachMaterias=()=>{
-   return fetch('http://localhost:3000/api/materia')
+   return fetch('http://localhost:3000/api/materia',{ cache: 'no-store'} )
    //return fetch('https://jsonplaceholder.typicode.com/posts')
    .then(res=>res.json());
 }
@@ -20,8 +20,7 @@ export default async function Materias(){
                         <MateriaCard key={materia._id} materia={materia} />
                     ))
                 }
-            </div>
-            
+            </div> 
         </div>
     )
 
