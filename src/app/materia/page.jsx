@@ -17,7 +17,7 @@ export default async function Materias(){
             <div className="grid grid-cols-3 gap-2">
                 {
                     materias.map(materia=>(
-                        <MateriaCard key={materia._id} materia={materia} />
+                        <MateriaCard key={materia._id} materia={materia}  className="bg-gray-700 p-10 mt-5 text-white rounded-xl hover:bg-gray-500" />
                     ))
                 }
             </div> 
