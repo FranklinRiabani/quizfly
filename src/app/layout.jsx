@@ -3,6 +3,7 @@ import './globals.css'
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import Navbar from '@/componets/Navbar';
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <main className='container  mx-auto px-5 py-3'>
+          <Navbar />
           {children}
         </main>
       </body>
