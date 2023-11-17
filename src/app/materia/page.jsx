@@ -1,4 +1,4 @@
-import MateriaCard from "@/componets/MateriaCard";
+import MateriaCard from "@/components/MateriaCard";
 import Link from "next/link";
 
 export const feachMaterias=()=>{
