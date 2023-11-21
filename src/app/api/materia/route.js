@@ -6,9 +6,9 @@ export async function GET(){
     try {
         await connectDB();
         const materias= await Materias.find();
-        return NextResponse.json({
+        return NextResponse.json(
         materias
-        })
+        )
     } catch (error) {
         console.log(error)
         return NextResponse(error.mensaje,{status:400})

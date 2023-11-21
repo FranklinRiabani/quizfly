@@ -2,7 +2,12 @@
 import { useEffect, useState } from "react";
 import { useRouter,useParams } from "next/navigation";
 
-function page() {
+export const feachMaterias=()=>{
+    return fetch('http://localhost:3000/api/materia',{ cache: 'no-store'} )
+    .then(res=>res.json());
+ }
+
+ const HomePage=()=> {
     const [materia,setMateria] = useState(
         {
             titulo:"",
@@ -11,6 +16,14 @@ function page() {
             orden:""
         }
     );
+    const [materias, setMaterias]=useState([]);
+
+    const getMaterias = async ()=>{
+        const res = await fetch(`/api/materia`);
+        const materias = await res.json();
+        console.log(materias);
+        setMaterias(materias);
+    }
 
     const router = useRouter();
     const params = useParams();
@@ -29,6 +42,11 @@ function page() {
         router.push('/materia');
         router.refresh();
     }
+
+    const handleSelect=(e)=>{
+        console.log(e.target.value)
+    }
+
     const handlerChangeToggle=(e)=>{
         console.log(e.target.checked)
         setMateria({...materia,[e.target.name]:e.target.checked})
@@ -37,6 +55,11 @@ function page() {
         console.log(e.target.value)
         setMateria({...materia,[e.target.name]:e.target.value})
     }
+
+    useEffect(()=>{
+       getMaterias()
+    },[])
+
   return (
     <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
 
@@ -62,6 +85,15 @@ function page() {
         <input type="number" name="orden" placeholder="asignar un orden 1,2,3,4"
         className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg  w-full  p-4  my-1"
         onChange={handlerChange}/>
+        
+        <select name="materia" onChange={handleSelect} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            {
+                materias.map(materia=>(
+                    <option value={materia._id}>{materia.titulo}</option>
+                ))
+            }
+        </select>
+
         <button type="submit"
         className="mt-3 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >Registrar Materia</button>
@@ -71,4 +103,4 @@ function page() {
   )
 }
 
-export default page
+export default HomePage

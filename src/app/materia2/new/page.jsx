@@ -4,10 +4,10 @@ import { useRouter,useParams } from "next/navigation";
 
  
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { useForm } from "react-hook-form";
+import * as z from "zod";
  
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,15 +17,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 //import { toast } from "@/components/ui/use-toast"
 
 const FormSchema = z.object({
     titulo: z.string().min(2, {
-      message: "Titulo must be at least 2 characters.",
+      message: "Titulo debe teber mas de 2 caracteres.",
     }),
     imagen: z.string().min(2, {
-        message: "Imagen must be at least 2 characters.",
+        message: "El campo imagen es obligatorio.",
       }),
   })
 
@@ -35,8 +36,8 @@ function Page() {
         defaultValues: {
           titulo: "",
           imagen: "",
-          visible: "",
-          orden: "",
+          visible: true,
+          orden: 1,
         },
       })
 
@@ -78,20 +79,38 @@ function Page() {
         setMateria({...materia,[e.target.name]:e.target.value})
     }
 
-    function onSubmit(data) {
-        toast({
+   async function onSubmit(data) {
+        console.log(data);
+
+        /*e.preventDefault();
+        //console.log(materia);
+
+        const res = await fetch('/api/materia',{
+            method:'POST',
+            body:JSON.stringify(data)
+        })
+
+        const materia = await res.json();
+        console.log(materia);
+        router.push('/materia2');
+        router.refresh();
+
+        /*toast({
           title: "You submitted the following values:",
           description: (
             <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              <code className="text-white">{JSON.stringify(data)}</code>
             </pre>
           ),
-        })
+        })*/
+
       }
   return (
     <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
-        <Form {...form}>
-      <form  className="w-2/3 space-y-6">
+      
+      <Form {...form}>
+      <form  onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <h1 className="text-3xl">Crear Nueva Materia</h1>
         <FormField
           name="titulo"
           render={({ field }) => (
@@ -103,42 +122,49 @@ function Page() {
             </FormItem>
           )}
         />
-    <FormField
+      <FormField
           name="imagen"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Imagen</FormLabel>
               <FormControl>
-                <Input placeholder="Ingrese imagen" {...field} />
+                <Input type="file" placeholder="Ingrese imagen" {...field} />
               </FormControl>
             </FormItem>
           )}
         />
 
-<FormField
+        <FormField
+          control={form.control}
           name="visible"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Visible</FormLabel>
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
               <FormControl>
-                <Input placeholder="Ingrese Visible" {...field} />
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                 La materia sera Visible
+                </FormLabel>
+              </div>
             </FormItem>
           )}
         />
-
-<FormField
+      <FormField
           name="orden"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Orden</FormLabel>
               <FormControl>
-                <Input placeholder="Ingrese orden" {...field} />
+                <Input type="number" placeholder="Ingrese orden" {...field} />
               </FormControl>
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Registrar Materia</Button>
       </form>
     </Form>
     </div>

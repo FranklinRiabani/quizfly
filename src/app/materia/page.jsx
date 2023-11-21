@@ -8,8 +8,10 @@ export const feachMaterias=()=>{
 }
 
 export default async function Materias(){
-    const {materias}= await feachMaterias();
+    const materias = await feachMaterias();
+    
     console.log(materias);
+
     return(
         <div>
             <h1>Materias</h1>

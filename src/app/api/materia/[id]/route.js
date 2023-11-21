@@ -14,9 +14,9 @@ export async function GET(request,{params}){
             },{status:400})
         }
 
-        return NextResponse.json({
+        return NextResponse.json(
         materias
-        })
+        )
     } catch (error) {
         console.log(error)
         return NextResponse(error.mensaje,{status:400})
@@ -57,7 +57,6 @@ export async function PUT(request,{params}){
         
         if(!materiaUpdated){
             return NextResponse({
-
                 mensaje:"Materia no encontrada"
             },{status:400})
         }
